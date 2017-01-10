@@ -23,7 +23,35 @@ router.get('/', function(req, res, next) {
   });
   
   
-  res.render('index', { title: 'Express' });
+  var Request=require('tedious').Request;
+  var TYPES=require('tedious').TYPES;
+  
+  function executeStatement(){
+    request=new Request("SELECT TOP(10) CompanyName FROM SalesLT.Customer;",function(err){
+    if(err){
+      console.log(err);}
+  });
+  
+  var result='<table>';
+    
+    request.on('row',function(columns){//データの取得米に呼ばれる
+   result+='<tr>';
+      columns.forEach(function(columns){
+if(column.value===null){
+  console.log('NULL');
+}else{
+  result+='<td>'+column.value+'</td>';
+}
+        result+='</tr>';
+      });
+    });
+    
+    request.on('doneProc',function(rowCount,more,returnStatus,rows){
+    result+="</table>";
+      res.render('index',{title:"はじめての DB",message:result});
+    });
+    connection.execSql(request);
+  }
 });
-
-module.exports = router;
+module.exports=router;
+   
