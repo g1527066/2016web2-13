@@ -7,9 +7,9 @@ router.get('/', function(req, res, next) {
   var Connection=require('tedious').Connection;
   var config={
     userName: 'mikado',
-    password:'P@ssword',
-    server:'',
-    options:{}
+    password:'Zibababa33',
+    server:'2016web2-mikado',
+    options:{encrypt:true,datebase;'2016web2-13'}
   };
   
   var connection=new Connection(config);
